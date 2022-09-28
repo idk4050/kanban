@@ -1,0 +1,4 @@
+*.env
+*.pem
+.vscode
+node_modules
