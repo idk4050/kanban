@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: api
+  namespace: kanban-api
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 3000
+  selector:
+    name: api
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+  namespace: kanban-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: api
+  template:
+    metadata:
+      labels:
+        name: api
+    spec:
+      volumes:
+      - name: tls
+        secret:
+          secretName: api-tls
+      containers:
+      - name: api
+        image: registry.kanban.local/api:latest
+        ports:
+        - containerPort: 3000
+        resources: {}
+        volumeMounts:
+        - name: tls
+          mountPath: /home/kanban/tls
+        envFrom:
+        - configMapRef:
+            name: api
+        - secretRef:
+            name: api
+        env:
+        - name: API_TLS_CERT_FILE
+          value: /home/kanban/tls/api.crt
+        - name: API_TLS_KEY_FILE
+          value: /home/kanban/tls/api.key
