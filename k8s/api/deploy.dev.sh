@@ -29,4 +29,5 @@ for tls_subdir in $tls_dir/*; do
 done
 
 kubectl apply \
-  -f api.yaml
+  -f api.yaml \
+  -f database.yaml

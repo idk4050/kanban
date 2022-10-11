@@ -3,10 +3,12 @@ import autoload from '@fastify/autoload'
 import config from './config/config.js'
 import { join } from 'desm'
 import fs from 'fs'
+import * as knex from 'knex'
 
 /**
  * @typedef {import('fastify').FastifyInstance & {
  *   config: typeof config
+ *   database: knex.Knex
  * }} Router
  */
 
