@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth
+  namespace: kanban-auth
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 4000
+    targetPort: 8443
+  selector:
+    name: auth
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth
+  namespace: kanban-auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: auth
+  template:
+    metadata:
+      labels:
+        name: auth
+    spec:
+      volumes:
+      - name: tls
+        configMap:
+          name: auth-tls
+      containers:
+      - name: auth
+        image: quay.io/keycloak/keycloak:19.0.3
+        args: [
+          start,
+          --https-certificate-file=/tls/auth.crt,
+          --https-certificate-key-file=/tls/auth.key
+        ]
+        ports:
+        - containerPort: 8443
+        resources: {}
+        volumeMounts:
+        - name: tls
+          mountPath: /tls
+        envFrom:
+        - configMapRef:
+            name: auth
+        - secretRef:
+            name: auth

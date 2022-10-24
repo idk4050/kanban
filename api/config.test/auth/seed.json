@@ -1,0 +1,42 @@
+{
+  "enabled": true,
+  "realm": "kanban",
+  "registrationAllowed": true,
+  "requiredCredentials": ["password"],
+  "clients": [
+    {
+      "enabled": true,
+      "clientId": "api",
+      "secret": "kanbanapi",
+      "redirectUris": ["/"],
+      "webOrigins": ["/"],
+      "serviceAccountsEnabled": true
+    }
+  ],
+  "roles": {
+    "realm": [{ "name": "user" }]
+  },
+  "scopeMappings": [
+    {
+      "client": "api",
+      "roles": ["user"]
+    }
+  ],
+  "users": [
+    {
+      "enabled": true,
+      "username": "kanban",
+      "email": "kanban@kanban.dev",
+      "credentials": [
+        {
+          "type": "kanban",
+          "value": "kanban"
+        }
+      ],
+      "realmRoles": ["user"],
+      "clientRoles": {
+        "account": ["view-profile", "manage-account"]
+      }
+    }
+  ]
+}

@@ -23,6 +23,14 @@ const schema = {
     DB_PASSWORD: { type: 'string' },
     DB_MIGRATE: { type: 'boolean' },
     DB_SEED: { type: 'boolean' },
+
+    AUTH_IN_MEMORY: { type: 'boolean' },
+    AUTH_SEED_FILE: { type: 'string' },
+    AUTH_HOST: { type: 'string' },
+    AUTH_PORT: { type: 'integer' },
+    AUTH_REALM: { type: 'string' },
+    AUTH_CLIENT: { type: 'string' },
+    AUTH_CLIENT_SECRET: { type: 'string' },
   },
 }
 
@@ -57,5 +65,14 @@ export default {
     password: String(config.DB_PASSWORD),
     migrate: Boolean(config.DB_MIGRATE),
     seed: Boolean(config.DB_SEED),
+  },
+  auth: {
+    inMemory: Boolean(config.AUTH_IN_MEMORY),
+    seedFile: String(config.AUTH_SEED_FILE),
+    host: String(config.AUTH_HOST),
+    port: Number(config.AUTH_PORT),
+    realm: String(config.AUTH_REALM),
+    client: String(config.AUTH_CLIENT),
+    clientSecret: String(config.AUTH_CLIENT_SECRET),
   },
 }
